@@ -15,7 +15,7 @@ rule link
 
 
 build libs/main.o: compile src/main.cpp
-# build utils.o: compile src/utils.cpp
+build libs/utils.o: compile src/utils.cpp
 
 # Final binary target
-build tnebcalc: link libs/main.o
+build tnebcalc: link libs/main.o libs/utils.o
