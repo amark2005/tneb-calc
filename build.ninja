@@ -1,0 +1,21 @@
+# Variables
+cxx = clang++
+cflags = -Wall -Wextra -Werror -flto -fsanitize=address -fsanitize=undefined -O0 -std=c++26
+
+
+# Compilation rule with automatic header dependency tracking
+rule compile
+  command = $cxx $cflags -c $in -o $out  
+  description = Compiling $out
+
+# Link rule
+rule link
+  command = $cxx $cflags $in -o $out
+  description = Linking $in into $out
+
+
+build libs/main.o: compile src/main.cpp
+# build utils.o: compile src/utils.cpp
+
+# Final binary target
+build tnebcalc: link libs/main.o
