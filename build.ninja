@@ -1,7 +1,9 @@
 # Variables
 cxx = clang++
-cflags = -Wall -Wextra -Werror -flto -O3 -std=c++26 -fno-exceptions -fno-rtti -fno-threadsafe-statics
+cflags = -std=c++26 -Wall -Wextra -Werror -flto -O3 -std=c++26 -fno-exceptions -fno-rtti -fno-threadsafe-statics
 # -fsanitize=address -g -O0 
+rxx = rustc
+rflags = --edition=2021 --crate-type lib --emit=obj -C panic=abort -C opt-level=3
 
 
 # Compilation rule with automatic header dependency tracking
@@ -13,11 +15,15 @@ rule compile
 rule link
   command = $cxx $cflags $in -o $out
   description = Linking $in into $out
-
+# Compile Rust
+rule rust_compile
+  command = $rxx $rflags $in -o $out  
+  description = Compiling $out
 
 build libs/main.o: compile src/main.cpp
 build libs/utils.o: compile src/utils.cpp
 build libs/disp.o: compile src/disp.cpp
+build libs/rust_stod.o: rust_compile rust_mod/rust_stod.rs
 
 # Final binary target
-build tnebcalc: link libs/main.o libs/utils.o libs/disp.o
+build tnebcalc: link libs/main.o libs/utils.o libs/disp.o libs/rust_stod.o

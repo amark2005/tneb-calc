@@ -1,15 +1,22 @@
-#include <iostream>
+#include <print>
 #include "utils.hpp"
 #include "disp.hpp"
 
+extern "C" int rust_stod(
+    const char* input,
+    double* output
+);
+
 int main([[maybe_unused]]int argc,char *argv[]){
-    std::ios_base::sync_with_stdio(false);
     if (argc != 2) {
-        std::cerr << "usage: " << argv[0] << " <units>\n";
+        std::println("usage: {} <units>",argv[0]);
         return 1;
     }
-    
-    const double argu=std::stod(argv[1]);
+    double argu=0.0;
+    if(rust_stod(argv[1],&argu)==1){
+        std::println("Invalid Number\nexitinggg....");
+        return 1;
+    }
     
     if(argu<=500){
         const double bill=under500(&argu);
