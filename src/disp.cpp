@@ -8,5 +8,5 @@
 // 
 
 void disp(const double *units) {
-    std::println("Total bill: {:.2f}",*units);
+    std::println("Total bill: {:.2f}rs",*units);
 }
