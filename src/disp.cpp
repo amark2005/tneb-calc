@@ -1,5 +1,5 @@
 #include "disp.hpp"
-#include <iostream>
+#include <print>
 
 //
 // 
@@ -8,5 +8,5 @@
 // 
 
 void disp(const double *units) {
-    std::cout << "Total bill: "<<*units<<"\n";
+    std::println("Total bill: {:.2f}",*units);
 }
