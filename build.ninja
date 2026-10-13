@@ -1,6 +1,7 @@
 # Variables
 cxx = clang++
-cflags = -Wall -Wextra -Werror -flto -fsanitize=address -fsanitize=undefined -O0 -std=c++26
+cflags = -Wall -Wextra -Werror -flto -O3 -std=c++26 -fno-exceptions -fno-rtti -fno-threadsafe-statics
+# -fsanitize=address -g -O0 
 
 
 # Compilation rule with automatic header dependency tracking
@@ -16,6 +17,7 @@ rule link
 
 build libs/main.o: compile src/main.cpp
 build libs/utils.o: compile src/utils.cpp
+build libs/disp.o: compile src/disp.cpp
 
 # Final binary target
-build tnebcalc: link libs/main.o libs/utils.o
+build tnebcalc: link libs/main.o libs/utils.o libs/disp.o
